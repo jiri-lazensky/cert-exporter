@@ -34,6 +34,8 @@ func secondsToExpiryFromCertAsBase64String(s string) ([]certMetric, error) {
 		return []certMetric{}, err
 	}
 
+	certBytes = removeAllNewlinesAtEnd(certBytes)
+
 	return secondsToExpiryFromCertAsBytes(certBytes, "")
 }
 
@@ -116,4 +118,11 @@ func parseAsPEM(certBytes []byte) (bool, []certMetric, error) {
 		metrics = append(metrics, metric)
 	}
 	return true, metrics, nil
+}
+
+func removeAllNewlinesAtEnd(b []byte) []byte {
+	for len(b) > 0 && b[len(b)-1] == '\n' {
+		b = b[:len(b)-1]
+	}
+	return b
 }
