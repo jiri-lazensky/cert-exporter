@@ -42,6 +42,8 @@ func secondsToExpiryFromCertAsBase64String(s string) ([]certMetric, error) {
 func secondsToExpiryFromCertAsBytes(certBytes []byte, certPassword string) ([]certMetric, error) {
 	var metrics []certMetric
 
+	certBytes = removeAllNewlinesAtEnd(certBytes)
+
 	parsed, metrics, err := parseAsPEM(certBytes)
 	if parsed {
 		return metrics, err
